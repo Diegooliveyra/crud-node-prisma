@@ -2,10 +2,15 @@
   "name": "curso_node",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "repository": "git@github.com:Diegooliveyra/curso_node.git",
   "author": "Diego Oliveira <diegooliveirabryto@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
   }
 }

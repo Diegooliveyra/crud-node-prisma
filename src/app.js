@@ -1,10 +1,9 @@
 import express from 'express'
-import { userRouter } from './modules/user/user.controller.js'
-import { productRouter } from './modules/product/product.controller.js'
+import { routerLoader } from './routerLoader.js'
 
 const app = express()
 
-app.use(userRouter, productRouter)
+routerLoader(app)
 
 const port = 8080
 

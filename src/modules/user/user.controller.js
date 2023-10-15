@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-export const userRouter = Router()
+const userRouter = Router()
 
 const router = Router()
 
@@ -15,3 +15,5 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   res.send('by id')
 })
+
+export default userRouter

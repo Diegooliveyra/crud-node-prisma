@@ -1,10 +1,10 @@
 import express from 'express'
+import { userRouter } from './modules/user/user.controller.js'
+import { productRouter } from './modules/product/product.controller.js'
 
 const app = express()
 
-app.get('/user', (req, res) => {
-  res.send({ nome: 'Diego Oliveira' })
-})
+app.use(userRouter, productRouter)
 
 const port = 8080
 

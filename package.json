@@ -7,7 +7,7 @@
   "author": "Diego Oliveira <diegooliveirabryto@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "npx nodemon app.js",
+    "dev": "npx nodemon src/app.js",
     "lint:fix": "npx eslint ./src --ext .js --fix --ignore-path ./.gitignore",
     "lint:format": "npx prettier --log-level warn --write \"./**/*.{js,ts}\"",
     "lint": "yarn lint:format && yarn lint:fix"

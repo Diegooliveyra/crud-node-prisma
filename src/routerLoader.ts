@@ -10,7 +10,6 @@ export const routerLoader = (app) => {
     if (fs.statSync(modulesPath).isDirectory()) {
       const controllerPath = path.join(modulePath, `${dir}.controller.ts`)
       if (fs.existsSync(controllerPath)) {
-        // eslint-disable-next-line node/no-unsupported-features/es-syntax
         const controller = await import(controllerPath)
         if (controller.default && typeof controller.default === 'function') {
           app.use(controller.default)

@@ -3,6 +3,7 @@ import { createUser, getUser } from './user.service'
 import { UserModel } from './user.model'
 import { TypedRequestBody } from 'src/@types/requestType'
 import { NotFoundException } from '@exceptions/not-found-exception'
+import { ReturnError } from '@exceptions/dto/return-error.dto'
 
 const userRouter = Router()
 
@@ -16,7 +17,7 @@ router.get('/', async (_, res: Response): Promise<void> => {
       res.status(204)
       return
     }
-    res.status(500).send(error.message)
+    new ReturnError(res, error)
   })
   res.send(users)
 })

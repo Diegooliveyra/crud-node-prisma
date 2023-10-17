@@ -1,18 +1,14 @@
-import path, { dirname } from 'path'
-import { fileURLToPath } from 'url'
+import path from 'path'
 import fs from 'fs'
 
-const __fileName = fileURLToPath(import.meta.url)
-const __dirName = dirname(__fileName)
-
 export const routerLoader = (app) => {
-  const modulesPath = path.join(__dirName, 'modules')
+  const modulesPath = path.join(__dirname, 'modules')
 
   fs.readdirSync(modulesPath).forEach(async (dir) => {
     const modulePath = path.join(modulesPath, dir)
 
     if (fs.statSync(modulesPath).isDirectory()) {
-      const controllerPath = path.join(modulePath, `${dir}.controller.js`)
+      const controllerPath = path.join(modulePath, `${dir}.controller.ts`)
       if (fs.existsSync(controllerPath)) {
         // eslint-disable-next-line node/no-unsupported-features/es-syntax
         const controller = await import(controllerPath)

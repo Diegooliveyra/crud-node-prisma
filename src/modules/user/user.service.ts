@@ -3,6 +3,7 @@ import { UserModel } from './user.model'
 import { userInsertDTO } from './dto/user-insert.dto'
 import { NotFoundException } from '@exceptions/not-found-exception'
 import { BadRequestException } from '@exceptions/bad-request-exception'
+import { createPasswordHashed } from 'src/ultis/password'
 
 const prisma = new PrismaClient()
 
@@ -29,11 +30,17 @@ const getUserByCpfOurEmail = async (cpf: string, email: string): Promise<UserMod
 }
 
 export const createUser = async (body: userInsertDTO): Promise<UserModel> => {
-  const user = await getUserByCpfOurEmail(body.cpf, body.email)
-  if (user) {
+  const userData = await getUserByCpfOurEmail(body.cpf, body.email)
+
+  if (userData) {
     throw new BadRequestException('email or cpj already exists in the DB')
   }
+
+  const user: userInsertDTO = {
+    ...body,
+    password: await createPasswordHashed(body.password),
+  }
   return prisma.user.create({
-    data: body,
+    data: user,
   })
 }

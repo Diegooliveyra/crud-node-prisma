@@ -1,10 +1,11 @@
-import { UserModel } from '@modules/user/user.model'
 import { AuthDTO } from './dto/auth.dtp'
 import { getUserByCpfOurEmail } from '@modules/user/user.service'
 import { validatePassword } from '@utils/password'
 import { NotFoundException } from '@exceptions/not-found-exception'
+import { AuthModel } from './auth.model'
+import { generateToken } from '@utils/auth'
 
-export const validadeAuth = async (authDTO: AuthDTO): Promise<UserModel> => {
+export const validadeAuth = async (authDTO: AuthDTO): Promise<AuthModel> => {
   const user = await getUserByCpfOurEmail(authDTO?.email)
 
   if (!user) {
@@ -16,5 +17,6 @@ export const validadeAuth = async (authDTO: AuthDTO): Promise<UserModel> => {
   if (!isValidPassword) {
     throw new NotFoundException('User')
   }
-  return user
+
+  return new AuthModel(generateToken(user), user)
 }

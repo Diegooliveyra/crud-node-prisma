@@ -4,22 +4,30 @@ import { UserModel } from './user.model'
 import { TypedRequestBody } from 'src/@types/requestType'
 import { NotFoundException } from '@exceptions/not-found-exception'
 import { ReturnError } from '@exceptions/dto/return-error.dto'
+import { verifyToken } from '@utils/auth'
 
 const userRouter = Router()
-
 const router = Router()
 
 userRouter.use('/user', router)
 
-router.get('/', async (_, res: Response): Promise<void> => {
-  const users = await getUser().catch((error) => {
+router.get('/', async (req, res: Response): Promise<void> => {
+  try {
+    const authorization = req.headers.authorization
+    verifyToken(authorization)
+  } catch (error) {
+    new ReturnError(res, error)
+  }
+
+  try {
+    const users = await getUser()
+    res.send(users)
+  } catch (error) {
     if (error instanceof NotFoundException) {
       res.status(204)
-      return
+      new ReturnError(res, error)
     }
-    new ReturnError(res, error)
-  })
-  res.send(users)
+  }
 })
 
 router.post('/', async (req: TypedRequestBody<UserModel>, res: Response): Promise<void> => {

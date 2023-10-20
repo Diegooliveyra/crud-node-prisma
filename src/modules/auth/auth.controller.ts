@@ -12,10 +12,10 @@ authRouter.use('/auth', router)
 
 router.post('/', async (req: TypedRequestBody<AuthDTO>, res: Response): Promise<void> => {
   const user = await validadeAuth(req.body).catch((error) => {
-    return new ReturnError(res, error)
+    new ReturnError(res, error)
   })
-  console.log(user)
-  res.send(user)
+
+  res.status(200).send(user)
 })
 
 export default authRouter

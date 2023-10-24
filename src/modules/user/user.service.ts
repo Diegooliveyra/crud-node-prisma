@@ -30,6 +30,20 @@ export const getUserByCpfOurEmail = async (email: string, cpf?: string): Promise
   return user
 }
 
+export const getUserById = async (id: string): Promise<UserModel> => {
+  const user = prisma.user.findFirst({
+    where: {
+      id: Number(id),
+    },
+  })
+
+  if (!user) {
+    throw new NotFoundException('User')
+  }
+
+  return user
+}
+
 export const createUser = async (body: userInsertDTO): Promise<UserModel> => {
   const userData = await getUserByCpfOurEmail(body.email, body.cpf)
 
@@ -43,5 +57,32 @@ export const createUser = async (body: userInsertDTO): Promise<UserModel> => {
   }
   return prisma.user.create({
     data: user,
+  })
+}
+
+export const updateUser = async (id: string, body: userInsertDTO): Promise<UserModel> => {
+  const user = await getUserById(id)
+
+  if (!user) {
+    throw new NotFoundException('User')
+  }
+  return prisma.user.update({
+    where: {
+      id: Number(id),
+    },
+    data: body,
+  })
+}
+
+export const deleteUser = async (id: string): Promise<UserModel> => {
+  const user = await getUserById(id)
+
+  if (!user) {
+    throw new NotFoundException('User')
+  }
+  return prisma.user.delete({
+    where: {
+      id: Number(id),
+    },
   })
 }

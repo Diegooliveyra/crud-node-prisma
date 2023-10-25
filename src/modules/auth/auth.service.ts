@@ -13,7 +13,6 @@ export const validadeAuth = async (authDTO: AuthDTO): Promise<AuthModel> => {
   }
 
   const isValidPassword = await validatePassword(authDTO?.password, user.password)
-
   if (!isValidPassword) {
     throw new NotFoundException('User')
   }

@@ -61,16 +61,21 @@ export const createUser = async (body: userInsertDTO): Promise<UserModel> => {
 }
 
 export const updateUser = async (id: string, body: userInsertDTO): Promise<UserModel> => {
-  const user = await getUserById(id)
+  const userData = await getUserById(id)
 
-  if (!user) {
+  if (!userData) {
     throw new NotFoundException('User')
+  }
+
+  const user: userInsertDTO = {
+    ...body,
+    password: await createPasswordHashed(body.password),
   }
   return prisma.user.update({
     where: {
       id: Number(id),
     },
-    data: body,
+    data: user,
   })
 }
 

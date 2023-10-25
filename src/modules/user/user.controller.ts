@@ -5,6 +5,7 @@ import { TypedRequestBody } from 'src/@types/requestType'
 import { NotFoundException } from '@exceptions/not-found-exception'
 import { ReturnError } from '@exceptions/dto/return-error.dto'
 import { authMiddleware } from '@middlewares/auth.middleware'
+import { authAdminMiddleware } from '@middlewares/auth-admin.middleware'
 
 const userRouter = Router()
 const router = Router()
@@ -57,6 +58,8 @@ router.post('/', createUserController)
 
 router.use(authMiddleware)
 router.get('/', getUserController)
+
+router.use(authAdminMiddleware)
 router.put('/:id', updateUserController)
 router.delete('/:id', deleteUserController)
 

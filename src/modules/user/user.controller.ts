@@ -10,7 +10,7 @@ import { authAdminMiddleware } from '@middlewares/auth-admin.middleware'
 const userRouter = Router()
 const router = Router()
 
-const getUserController = async (req, res: Response): Promise<void> => {
+const getUserController = async (req: Request, res: Response): Promise<void> => {
   try {
     const users = await getUser()
     res.send(users)

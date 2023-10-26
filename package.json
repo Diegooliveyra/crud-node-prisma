@@ -9,7 +9,9 @@
     "dev": "npx ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/app.ts",
     "lint:fix": "npx eslint ./src --ext .ts --fix --ignore-path ./.gitignore",
     "lint:format": "npx prettier --log-level warn --write \"./**/*.{js,ts}\"",
-    "lint": "yarn lint:format && yarn lint:fix"
+    "lint": "yarn lint:format && yarn lint:fix",
+    "prisma:generate": " npx prisma generate",
+    "prisma:migrate": " npx prisma migrate dev"
   },
   "dependencies": {
     "@prisma/client": "^5.4.2",
